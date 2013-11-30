@@ -1,0 +1,14 @@
+1385781874.646      8 10.10.10.1 TCP_DENIED/403 4242 GET http://www.google.com/ - NONE/- text/html
+1385781874.843      3 10.10.10.1 TCP_DENIED/403 3923 GET http://www.squid-cache.org/Artwork/SN.png - NONE/- text/html
+1385781874.866      0 10.10.10.1 TCP_DENIED/403 4243 GET http://www.google.com/favicon.ico - NONE/- text/html
+1385781874.967      1 10.10.10.1 TCP_DENIED/403 4275 GET http://www.google.com/favicon.ico - NONE/- text/html
+1385781904.880      0 10.10.10.1 TCP_DENIED/403 4242 GET http://www.google.com/ - NONE/- text/html
+1385781905.076      1 10.10.10.1 TCP_DENIED/403 3923 GET http://www.squid-cache.org/Artwork/SN.png - NONE/- text/html
+1385781922.926      0 10.10.10.1 TCP_DENIED/403 3641 CONNECT fhr.data.mozilla.com:443 - NONE/- text/html
+1385782141.742      5 10.10.10.1 TCP_DENIED/403 4651 POST http://safebrowsing.clients.google.com/safebrowsing/downloads? - NONE/- text/html
+1385782201.760      1 10.10.10.1 TCP_DENIED/403 4651 POST http://safebrowsing.clients.google.com/safebrowsing/downloads? - NONE/- text/html
+1385782832.198      0 10.10.10.1 TCP_DENIED/403 3641 CONNECT fhr.data.mozilla.com:443 - NONE/- text/html
+1385783621.323      1 10.10.10.1 TCP_DENIED/403 3856 GET http://www.clarin.com.ar/ - NONE/- text/html
+1385783621.538      1 10.10.10.1 TCP_DENIED/403 3926 GET http://www.squid-cache.org/Artwork/SN.png - NONE/- text/html
+1385783621.567      0 10.10.10.1 TCP_DENIED/403 3857 GET http://www.clarin.com.ar/favicon.ico - NONE/- text/html
+1385783621.590      0 10.10.10.1 TCP_DENIED/403 3889 GET http://www.clarin.com.ar/favicon.ico - NONE/- text/html
