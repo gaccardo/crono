@@ -56,7 +56,7 @@ class SquidLogParser( object ):
 
   def __init__(self):
     self.cb = Couchbase.connect(bucket='default')
-    self.logfile = 'access.log'
+    self.logfile = 'access_real.log'
 
     
   def get_last_key(self):
@@ -81,17 +81,19 @@ class SquidLogParser( object ):
         rrr = [line for line in rawline.split(' ') if line]
         rawline = ""
 
-        if rrr[0].split('\n')[1] >= self.get_last_key():
-          access = Access(rrr[0].split('\n')[1], 
-                          rrr[1], rrr[2], rrr[3], 
-                          rrr[4], rrr[5], rrr[6])
-          access.save(self.cb)
+        if rrr[0] != '\n':
 
-          if access.get_time() > last_key:
-            last_key = access.get_time()
+          if rrr[0].split('\n')[1] >= self.get_last_key():
+            access = Access(rrr[0].split('\n')[1], 
+                            rrr[1], rrr[2], rrr[3], 
+                            rrr[4], rrr[5], rrr[6])
+            access.save(self.cb)
 
-        else:
-          break
+            if access.get_time() > last_key:
+              last_key = access.get_time()
+
+          else:
+            break
 
       try:
         os.lseek(f.fileno(), counter, 2)
