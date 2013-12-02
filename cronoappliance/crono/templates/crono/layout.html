@@ -16,10 +16,21 @@
     <script type="text/javascript">
       $(document).ready(function() {
 
+        var pathname = window.location.pathname;
+        pathname = pathname.split('/');
+        view = pathname[pathname.length-1];
+
         // Menu
         $.getJSON("{% url 'menu' %}", function(menu) {
           for (var i = 0; i<menu.length; i++) {
-            $("#rptx-menu").append('<li><a href="'+menu[i][1]+'"><i class="fa fa-'+menu[i][2]+'"></i> '+menu[i][0]+'</a></li>')
+            var active;
+            if (view == menu[i][1]) {
+              active = "active";
+            } else {
+              active = "";
+            }
+
+            $("#rptx-menu").append('<li class="'+active+'"><a href="'+menu[i][1]+'"><i class="fa fa-'+menu[i][2]+'"></i> '+menu[i][0]+'</a></li>')
           }
         })
       });

@@ -11,7 +11,8 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^crono/', 'crono.views.home', name='home'),
+    url(r'^crono/dashboard', 'crono.views.dashboard', name='dashboard'),
+    url(r'^crono/proxy', 'crono.views.proxy', name='proxy'),
     url(r'^backend/menu/', menu.represent, name='menu'),
     url(r'^backend/layout', 'crono.views.layout', name='layout'),
 )
