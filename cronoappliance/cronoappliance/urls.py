@@ -12,4 +12,5 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^crono/', 'crono.views.home', name='home'),
+    url(r'^backend/layout', 'crono.views.layout', name='layout'),
 )
