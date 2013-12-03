@@ -1,0 +1,47 @@
+{% extends 'crono/layout.html' %}
+{% load staticfiles %}
+
+{% block head %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			$(".ip_link").on('click', function(e) {
+				e.preventDefault();
+			})
+		});
+	</script>
+{% endblock %}
+
+{% block title %}{% endblock %}
+{% block subtitle %}{% endblock %}
+
+
+{% block content %}
+  <div class="row">
+  	<div class="col-lg-6">
+  		<h2>User's ip statistics</h2>
+	  	<div class="table table-hover table-striped tablesorter">
+	  		<table class="table">
+	  			<thead>
+	  				<tr>
+	  					<th class="header">IP<i class="fa fa-sort"></i><th>
+	  					<th class="header">HITS<i class="fa fa-sort"></i><th>
+	  					<th class="header">MISSES<i class="fa fa-sort"></i><th>
+	  					<th class="header">DENIES<i class="fa fa-sort"></i><th>
+	  				</tr>
+	  			</thead>
+	  			<tbody>
+	  				{% for ip in ip_stats %}
+	  					<tr>
+	  						<td><a href="ip_{{ip.ip}}" class="ip_link">{{ip.ip}}</a></td>
+	  						<td>{% if ip.hits %}{{ip.hits}}{% else %} - {% endif %}</td>
+	  						<td>{% if ip.misses %}{{ip.misses}}{% else %} - {% endif %}</td>
+	  						<td>{% if ip.denies %}{{ip.denies}}{% else %} - {% endif %}</td>
+	  					</tr>
+	  				{% endfor %}
+	  			</tbody>
+	  		</table>
+	  	</div>
+	  </div>
+  </div>
+{% endblock %}

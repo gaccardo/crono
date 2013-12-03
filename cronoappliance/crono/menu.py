@@ -6,7 +6,7 @@ def represent(request):
 
 	menu.append( ('Dashboards', 'dashboard', 'dashboard') )
 	#menu.append( ('Reports', '', 'bar-chart-o') )
-	#menu.append( ('Firewall', '', 'wrench') )
+	menu.append( ('Firewall', '', 'wrench') )
 	menu.append( ('Proxy', 'proxy', 'edit') )
 	menu.append( ('Configuration', 'conf', 'wrench') )
 
