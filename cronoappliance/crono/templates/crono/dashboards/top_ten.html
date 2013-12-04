@@ -10,7 +10,8 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#urls").hide();
+			$("#url_box").hide();
+			$("#url_box_denied").hide();
 
 			$("#datepicker_from").datepicker({
 				"showAnim": "bounce",
@@ -23,8 +24,10 @@
 				e.preventDefault();
 
 				$(".removeRow").remove();				
+				$(".removeRow2").remove();
 				
-				$("#urls").show();
+				$("#url_box").show();
+				$("#url_box_denied").show();
 				var from = $("#datepicker_from").val();
 				from = from.replace('/', '_');
 				from = from.replace('/', '_');
@@ -36,7 +39,7 @@
 				$.getJSON("{% url 'top10byrange' 999 998 %}".replace(999, from).replace(998, to), function(data) {
 					var pieChartDataSource = [];					
 					for (var i = 0; i<data.urls.length; i++) {
-						$('#urls tr:last').after('<tr class="removeRow"><td>'+data.urls[i].url+'</td><td>'+data.urls[i].count+'</td><tr>');
+						$('#urls tr:last').after('<tr class="removeRow"><td><a href="">'+data.urls[i].url+'</a></td><td>'+data.urls[i].count+'</td><tr>');
 						pieChartDataSource.push({'category': data.urls[i].url, 'value': data.urls[i].count})
 					}
 
@@ -45,12 +48,33 @@
 		        series: {
 		            argumentField: 'category',
 		            valueField: 'value',
+		            label: {
+		            	visible: true,
+		            }
 		        }    
 			    });
 				});
-			})
 
-		})
+				$.getJSON("{% url 'top10deniedbyrange' 999 998 %}".replace(999, from).replace(998, to), function(data) {
+					var pieChartDataSource = [];
+					for (var i = 0; i<data.urls.length; i++) {
+						$('#urls_denied tr:last').after('<tr class="removeRow2"><td><a href="">'+data.urls[i].url+'</a></td><td>'+data.urls[i].count+'</td><tr>');
+						pieChartDataSource.push({'category': data.urls[i].url, 'value': data.urls[i].count})
+					}
+
+					$("#pieChartContainerDenied").dxPieChart({
+		        dataSource: pieChartDataSource,
+		        series: {
+		            argumentField: 'category',
+		            valueField: 'value',
+		            label: {
+		            	visible: true,
+		            }
+		        }    
+			    });
+				});
+			});
+		});
 	</script>
 {% endblock %}
 
@@ -64,7 +88,7 @@
 	<button id="datepicker_select">Filter</button><br>
 
   <br><br>
-  <div class="col-lg-4">
+  <div id="url_box" class="col-lg-4">
   	<div class="panel panel-primary">
   		<div class="panel-heading">
   			<h3 class="panel-title">Top 10 visited URLs</h3>
@@ -78,10 +102,29 @@
 					</thead>
 					<tbody></tbody>
 				</table>
-				<div id="pieChartContainer" style="float:left;max-width:400px;height: 200px;"></div>
+				<div id="pieChartContainer" style="float:left;max-width:450px;height: 225px;"></div>
 			</div>
 		</div>
 	</div>
 
+
+  <div id="url_box_denied" class="col-lg-4">
+  	<div class="panel panel-primary">
+  		<div class="panel-heading">
+  			<h3 class="panel-title">Top 10 denied URLs</h3>
+  		</div>
+  		<div class="panel-body">
+				<table id="urls_denied" class="table">
+					
+					<thead>
+						<th>URL</th>
+						<th>HITS</th>
+					</thead>
+					<tbody></tbody>
+				</table>
+				<div id="pieChartContainerDenied" style="float:left;max-width:450px;height: 225px;"></div>
+			</div>
+		</div>
+	</div>
 	
 {% endblock %}
