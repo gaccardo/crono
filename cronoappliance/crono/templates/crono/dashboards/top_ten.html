@@ -15,10 +15,23 @@
 
 			$("#datepicker_select").on('click', function(e) {
 				e.preventDefault();
-				console.log( $("#datepicker_from").val() );
-				console.log( $("#datepicker_to").val() );
 
+				$(".removeRow").remove();				
+				
 				$("#urls").show();
+				var from = $("#datepicker_from").val();
+				from = from.replace('/', '_');
+				from = from.replace('/', '_');
+				
+				var to = $("#datepicker_to").val();
+				to = to.replace('/', '_');
+				to = to.replace('/', '_');
+
+				$.getJSON("{% url 'top10byrange' 999 998 %}".replace(999, from).replace(998, to), function(data) {
+					for (var i = 0; i<data.urls.length; i++) {
+						$('#urls tr:last').after('<tr class="removeRow"><td>'+data.urls[i].url+'</td><td>'+data.urls[i].count+'</td><tr>')
+					}
+				});
 			})
 
 		})
@@ -31,14 +44,17 @@
 
 {% block content %}
 
-	<input type="text" id="datepicker_from">
-	<input type="text" id="datepicker_to">
-	<button id="datepicker_select">Filter</button>
+	Date from: <input type="text" id="datepicker_from">
+	Date to: <input type="text" id="datepicker_to">
+	<button id="datepicker_select">Filter</button><br>
 
-	<div id="urls"> 
-		{% for access in accesses %}
-			{{access.url}} | {{access.count}} <br>
-		{% endfor %}
-	</div>
+	<table id="urls" class="table">
+		<caption><h3>Top 10 visited URLs</h3></caption>
+		<thead>
+			<th>URL</th>
+			<th>HITS</th>
+		</thead>
+		<tbody></tbody>
+	</table>
 
 {% endblock %}
