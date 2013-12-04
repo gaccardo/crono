@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.template import RequestContext, loader
+from django.db.models import Count
+from django.db.models.query import QuerySet
 
-from couchbase import Couchbase
-from couchbase.views.iterator import View, Query
-
+from crono.models import Access
 
 def get_ips_info(request):
+	"""
 	cb = Couchbase.connect(bucket='default')
 	all_requests = list()
 	denies_requests = list()
@@ -64,3 +65,13 @@ def get_ips_info(request):
 		'ip_stats': final_requests
 	})
 	return render(request, 'crono/dashboards/deniesbyip.html', context)
+	"""
+	pass
+
+def get_top_ten(request):
+	accesses = Access.objects.values('url').annotate(count=Count('url')).order_by('-count')[0:10]
+
+	context = RequestContext(request, {
+		'accesses': accesses
+	})
+	return render(request, 'crono/dashboards/top_ten.html', context)

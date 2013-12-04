@@ -1,0 +1,16 @@
+{% extends 'crono/layout.html' %}
+{% load staticfiles %}
+
+{% block head %}
+{% endblock %}
+
+{% block title %}{% endblock %}
+{% block subtitle %}{% endblock %}
+
+{% block content %}
+
+	{% for access in accesses %}
+		{{access.url}} | {{access.count}} <br>
+	{% endfor %}
+
+{% endblock %}

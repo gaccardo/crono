@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import sqlalchemy
+import tldextract
 import datetime
 
 from sqlalchemy.ext.declarative import declarative_base
@@ -63,9 +64,10 @@ class SquidLogParser( object ):
     for rawline in file_buffer:
       r = [line for line in rawline.split(' ') if line]
       if r[0] > self.get_last_key():
+        url = tldextract.extract(r[6])
         access = Access(time=r[0], elapsed=r[1], ip=r[2], 
                 code=r[3], data=r[4], method=r[5], 
-                url=r[6], date=datetime.datetime.now())
+                url='%s.%s' % (url.domain, url.suffix), date=datetime.datetime.now())
         self.add_access(access)
         last_key = r[0]
 
