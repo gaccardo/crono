@@ -63,16 +63,25 @@
 	Date to: <input type="text" id="datepicker_to">
 	<button id="datepicker_select">Filter</button><br>
 
+  <br><br>
   <div class="col-lg-4">
-		<table id="urls" class="table">
-			<caption><h3>Top 10 visited URLs</h3></caption>
-			<thead>
-				<th>URL</th>
-				<th>HITS</th>
-			</thead>
-			<tbody></tbody>
-		</table>
+  	<div class="panel panel-primary">
+  		<div class="panel-heading">
+  			<h3 class="panel-title">Top 10 visited URLs</h3>
+  		</div>
+  		<div class="panel-body">
+				<table id="urls" class="table">
+					
+					<thead>
+						<th>URL</th>
+						<th>HITS</th>
+					</thead>
+					<tbody></tbody>
+				</table>
+				<div id="pieChartContainer" style="float:left;max-width:400px;height: 200px;"></div>
+			</div>
+		</div>
 	</div>
 
-	<br><div id="pieChartContainer" style="float:left;max-width:400px;height: 200px;"></div>
+	
 {% endblock %}
