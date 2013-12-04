@@ -25,6 +25,8 @@
 
 				$(".removeRow").remove();				
 				$(".removeRow2").remove();
+				$("#pieChartContainerDenied").dxPieChart({'dataSource': null});
+				$("#pieChartContainer").dxPieChart({'dataSource': null});
 				
 				$("#url_box").show();
 				$("#url_box_denied").show();
@@ -129,7 +131,7 @@
 					</thead>
 					<tbody></tbody>
 				</table>
-				
+
 				<div id="pieChartContainerDenied" style="float:left;max-width:525px;height: 200px;"></div>
 			</div>
 		</div>
