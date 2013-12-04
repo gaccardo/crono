@@ -75,3 +75,5 @@ def get_top_ten(request):
 		'accesses': accesses
 	})
 	return render(request, 'crono/dashboards/top_ten.html', context)
+
+	#timestamp = time.mktime( time.strptime(datestring, '%d/%m/%Y') )

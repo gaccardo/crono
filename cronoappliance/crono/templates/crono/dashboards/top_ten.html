@@ -2,6 +2,28 @@
 {% load staticfiles %}
 
 {% block head %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#urls").hide();
+
+			$("#datepicker_from").datepicker({
+				"showAnim": "bounce",
+			});
+			$("#datepicker_to").datepicker({
+				"showAnim": "bounce",
+			});
+
+			$("#datepicker_select").on('click', function(e) {
+				e.preventDefault();
+				console.log( $("#datepicker_from").val() );
+				console.log( $("#datepicker_to").val() );
+
+				$("#urls").show();
+			})
+
+		})
+	</script>
+
 {% endblock %}
 
 {% block title %}{% endblock %}
@@ -9,8 +31,14 @@
 
 {% block content %}
 
-	{% for access in accesses %}
-		{{access.url}} | {{access.count}} <br>
-	{% endfor %}
+	<input type="text" id="datepicker_from">
+	<input type="text" id="datepicker_to">
+	<button id="datepicker_select">Filter</button>
+
+	<div id="urls"> 
+		{% for access in accesses %}
+			{{access.url}} | {{access.count}} <br>
+		{% endfor %}
+	</div>
 
 {% endblock %}
