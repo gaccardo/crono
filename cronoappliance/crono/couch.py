@@ -54,14 +54,17 @@ def misses_requests_by_time_range(request, init_time=None, finish_time=None):
 		                                    'finish_time': finish_time}))
 
 # By IP
-def denies_by_ip(request):
+def urls_by_ip(request, ip):
 	cb = Couchbase.connect(bucket='default')
 	q = Query()
+	q.mapkey_range = [ [ip], [ip] ]
 	q.limit = 100
 
-	denies_requests = list()
+	print q
 
-	for result in View(cb, "by_ip", "denied", query=q):
-		denies_requests.append(result.value)
+	urls = list()
 
-	return simplejson.dumps({'denies_by_ip': denies_requests})
+	for result in View(cb, "by_ip", "urls", query=q):
+		urls.append(result.value)
+
+	return HttpResponse(simplejson.dumps({'urls': urls}))
