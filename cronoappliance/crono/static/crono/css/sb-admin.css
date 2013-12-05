@@ -157,3 +157,7 @@ table.tablesorter thead tr th:hover {
   }
 
 }
+
+#toggle_menu, #toggle_menu_show {
+  font-size: 10px;
+}

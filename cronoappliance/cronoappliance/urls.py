@@ -26,8 +26,8 @@ urlpatterns = patterns('',
 
     url(r'^backend/top10byrange/(?P<date_from>\w+)/(?P<date_to>\w+)', 'crono.dashboards.get_top_ten_range', name='top10byrange'),
     url(r'^backend/top10deniedbyrange/(?P<date_from>\w+)/(?P<date_to>\w+)', 'crono.dashboards.get_top_ten_denied_range', name='top10deniedbyrange'),
-
     url(r'^backend/visitedsitesrange/(?P<date_from>\w+)/(?P<date_to>\w+)/(?P<page>\w+)', 'crono.dashboards.get_sites_range', name='visitedsitesrange'),
+    url(r'^backend/trafficrange/(?P<date_from>\w+)/(?P<date_to>\w+)', 'crono.dashboards.get_traffic_range', name='trafficrange'),
     
     #url(r'^couch/last_key', 'crono.couch.last_key', name='last_key'),
 	#url(r'^couch/denied_requests', 'crono.couch.denied_requests'),

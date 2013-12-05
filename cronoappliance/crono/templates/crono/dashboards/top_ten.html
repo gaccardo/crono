@@ -65,7 +65,7 @@
 		            argumentField: 'category',
 		            valueField: 'value',
 		            label: {
-		            	visible: true,
+		            	visible: false,
 		            }
 		        }    
 			    });
@@ -84,7 +84,7 @@
 		            argumentField: 'category',
 		            valueField: 'value',
 		            label: {
-		            	visible: true,
+		            	visible: false,
 		            }
 		        }    
 			    });
@@ -98,6 +98,29 @@
 
 					all_url(from, to, newpage-1);					
 				})
+
+				$.getJSON("{% url 'trafficrange' 999 998 %}".replace(999, from).replace(998, to), function(data) {
+					$("#charttraffic").dxCircularGauge({
+						scale: {
+							startValue: '0',
+							endValue: '1000',
+							majorTick: {
+								tickInterval: 200,
+							},
+							minorTick: {
+								visible: true,
+								tickInterval: 50,
+							}
+						},
+						needles: [
+							{'value': data.traffic/1024/1024, width: 6},
+						],
+						markers: [
+							{'value': data.traffic/1024/1024},
+						],
+
+					});
+				});
 
 			});
 		});
@@ -162,7 +185,7 @@
 
 	<div style="clear:both"></div>
 
-	<div id="url_box_all" class="col-lg-12">
+	<div id="url_box_all" class="col-lg-5">
   	<div class="panel panel-primary">
   		<div class="panel-heading">
   			<h3 class="panel-title">All visited sites</h3>
@@ -182,5 +205,18 @@
 				</ul>
   		</div>
   	</div>
-	</div>	
+	</div>
+
+	<div id="traffic_total" class="col-lg-5">
+  	<div class="panel panel-primary">
+  		<div class="panel-heading">
+  			<h3 class="panel-title">Traffic Consumption (GB)</h3>
+  		</div>
+  		<div class="panel-body">
+  			<div id="charttraffic" style="width: 400px; margin-left: 38px;"></div>
+  		</div>
+  	</div>
+	</div>
+	
+
 {% endblock %}

@@ -35,7 +35,7 @@
             $("#rptx-menu").append('<li class="'+active+'"><a href="'+menu[i][3]+'"><i class="fa fa-'+menu[i][2]+'"></i> '+menu[i][0]+'</a></li>')
           }
 
-          $("#rptx-menu").append('<li id="toggle_menu" class=""><a href="#"><i class="fa"></i> Fold menu </a></li>');
+          $("#rptx-menu").append('<li id="toggle_menu" class=""><a href="#" class="dropup"><b class="caret"></b> Fold menu </a></li>');
 
           $("#toggle_menu").on('click', function(e) {
             e.preventDefault();
@@ -81,7 +81,7 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul id="rptx-menu" class="nav navbar-nav side-nav"></ul>
           <ul id="rptx-menu-show" class="nav navbar-nav side-nav" style="height: 50px">
-            <li id="toggle_menu_show"><a href="#"><i class="fa"></i> Show menu </a></li>
+            <li id="toggle_menu_show"><a href="#"><b class="caret"></b> Show menu </a></li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right navbar-user">
