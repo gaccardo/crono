@@ -44,7 +44,6 @@ def get_top_ten_denied_range(request, date_from, date_to):
 def get_sites_range(request, date_from, date_to, page):
 	urlXpage = 10
 	page = int(page)
-	print page*urlXpage, page*urlXpage+urlXpage
 	timestamp_from = time.mktime( time.strptime(date_from, '%m_%d_%Y') )
 	timestamp_to = time.mktime( time.strptime(date_to, '%m_%d_%Y') )
 	accesses = Access.objects.filter(time__gte=timestamp_from,
