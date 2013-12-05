@@ -18,6 +18,9 @@ urlpatterns = patterns('',
     url(r'^crono/firewall', 'crono.views.firewall', name='firewall'),
     url(r'^crono/configuration', 'crono.views.configuration', name='configuration'),
 
+    url(r'^accounts/login/$', 'crono.views.login_user', name='login'),
+    url(r'^accounts/logout/$', 'crono.views.logout_user', name='logout'),
+
     url(r'^menu', menu.represent, name='menu'),
     url(r'^backend/layout', 'crono.views.layout'),
 
