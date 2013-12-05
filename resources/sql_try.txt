@@ -1,0 +1,3 @@
+SELECT ip, sum(data) FROM `crono_access` WHERE time BETWEEN 1386026526.258 and 1386026530.00 GROUP BY ip
+
+SELECT url, count(url) FROM crono_access GROUP BY url ORDER BY count(url) DESC LIMIT 10

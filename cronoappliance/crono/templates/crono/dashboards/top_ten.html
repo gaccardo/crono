@@ -1,0 +1,140 @@
+{% extends 'crono/layout.html' %}
+{% load staticfiles %}
+
+{% block head %}
+
+	<script src="{% static 'crono/js/dx.chartjs.debug.js' %}"></script>
+	<script src="{% static 'crono/js/dx.chartjs.js' %}"></script>
+	<script src="{% static 'crono/js/knockout-2.2.1.js' %}"></script>
+	<script src="{% static 'crono/js/globalize.min.js' %}"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#url_box").hide();
+			$("#url_box_denied").hide();
+
+			$("#datepicker_from").datepicker({
+				"showAnim": "bounce",
+			});
+			$("#datepicker_to").datepicker({
+				"showAnim": "bounce",
+			});
+
+			$("#datepicker_select").on('click', function(e) {
+				e.preventDefault();
+
+				$(".removeRow").remove();				
+				$(".removeRow2").remove();
+				$("#pieChartContainerDenied").dxPieChart({'dataSource': null});
+				$("#pieChartContainer").dxPieChart({'dataSource': null});
+				
+				$("#url_box").show();
+				$("#url_box_denied").show();
+				var from = $("#datepicker_from").val();
+				from = from.replace('/', '_');
+				from = from.replace('/', '_');
+				
+				var to = $("#datepicker_to").val();
+				to = to.replace('/', '_');
+				to = to.replace('/', '_');
+
+				$.getJSON("{% url 'top10byrange' 999 998 %}".replace(999, from).replace(998, to), function(data) {
+					var pieChartDataSource = [];					
+					for (var i = 0; i<data.urls.length; i++) {
+						$('#urls tr:last').after('<tr class="removeRow"><td><a href="">'+data.urls[i].url+'</a></td><td>'+data.urls[i].count+'</td><tr>');
+						pieChartDataSource.push({'category': data.urls[i].url, 'value': data.urls[i].count})
+					}
+
+					$("#pieChartContainer").dxPieChart({
+		        dataSource: pieChartDataSource,
+		        series: {
+		            argumentField: 'category',
+		            valueField: 'value',
+		            label: {
+		            	visible: true,
+		            }
+		        }    
+			    });
+				});
+
+				$.getJSON("{% url 'top10deniedbyrange' 999 998 %}".replace(999, from).replace(998, to), function(data) {
+					var pieChartDataSource = [];
+					for (var i = 0; i<data.urls.length; i++) {
+						$('#urls_denied tr:last').after('<tr class="removeRow2"><td><a href="">'+data.urls[i].url+'</a></td><td>'+data.urls[i].count+'</td><tr>');
+						pieChartDataSource.push({'category': data.urls[i].url, 'value': data.urls[i].count})
+					}
+
+					$("#pieChartContainerDenied").dxPieChart({
+		        dataSource: pieChartDataSource,
+		        series: {
+		            argumentField: 'category',
+		            valueField: 'value',
+		            label: {
+		            	visible: true,
+		            }
+		        }    
+			    });
+				});
+			});
+		});
+	</script>
+{% endblock %}
+
+{% block title %}Sites Info{% endblock %}
+{% block subtitle %}Sites visited by users{% endblock %}
+
+{% block content %}
+
+	<div class="col-lg-6">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				Date from: <input type="text" id="datepicker_from">
+				Date to: <input type="text" id="datepicker_to">
+				<button id="datepicker_select">Filter</button><br>
+			</div>
+		</div>
+	</div>
+
+	<div style="clear:both"></div>
+	
+  <br><br>
+  <div id="url_box" class="col-lg-5">
+  	<div class="panel panel-primary">
+  		<div class="panel-heading">
+  			<h3 class="panel-title">Top 10 visited URLs</h3>
+  		</div>
+  		<div class="panel-body">
+				<table id="urls" class="table">
+					
+					<thead>
+						<th>URL</th>
+						<th>HITS</th>
+					</thead>
+					<tbody></tbody>
+				</table>
+				<div id="pieChartContainer" style="float:left;max-width:525px;height: 200px;"></div>
+			</div>
+		</div>
+	</div>
+
+  <div id="url_box_denied" class="col-lg-5">
+  	<div class="panel panel-danger">
+  		<div class="panel-heading">
+  			<h3 class="panel-title">Top 10 denied URLs</h3>
+  		</div>
+  		<div class="panel-body">
+				<table id="urls_denied" class="table">
+					
+					<thead>
+						<th>URL</th>
+						<th>HITS</th>
+					</thead>
+					<tbody></tbody>
+				</table>
+
+				<div id="pieChartContainerDenied" style="float:left;max-width:525px;height: 200px;"></div>
+			</div>
+		</div>
+	</div>
+	
+{% endblock %}
