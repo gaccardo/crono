@@ -19,3 +19,15 @@ def proxy(request):
 		'hola': 'hola'
 	})
 	return render(request, 'crono/proxy.html', context)
+
+def firewall(request):
+	context = RequestContext(request, {
+		'hola': 'hola'
+	})
+	return render(request, 'crono/proxy.html', context)
+
+def configuration(request):
+	context = RequestContext(request, {
+		'hola': 'hola'
+	})
+	return render(request, 'crono/proxy.html', context)

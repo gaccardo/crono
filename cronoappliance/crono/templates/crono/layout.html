@@ -25,14 +25,14 @@
         // Menu
         $.getJSON("{% url 'menu' %}", function(menu) {
           for (var i = 0; i<menu.length; i++) {
-            var active;
-            if (view == menu[i][1]) {
+
+            var active = "";
+            if ($.inArray(menu[i][1], pathname) != -1) {
+              console.log(menu[i][1], pathname);
               active = "active";
-            } else {
-              active = "";
             }
 
-            $("#rptx-menu").append('<li class="'+active+'"><a href="'+menu[i][1]+'"><i class="fa fa-'+menu[i][2]+'"></i> '+menu[i][0]+'</a></li>')
+            $("#rptx-menu").append('<li class="'+active+'"><a href="'+menu[i][3]+'"><i class="fa fa-'+menu[i][2]+'"></i> '+menu[i][0]+'</a></li>')
           }
         })
       });

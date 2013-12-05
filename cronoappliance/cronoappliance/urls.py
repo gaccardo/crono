@@ -13,9 +13,10 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^crono/dashboard/top10/', 'crono.dashboards.get_top_ten', name='top10'),
-    url(r'^crono/dashboard', 'crono.views.dashboard'),
-
-    url(r'^crono/proxy', 'crono.views.proxy'),
+    url(r'^crono/dashboard', 'crono.views.dashboard', name='dashboard'),
+    url(r'^crono/proxy', 'crono.views.proxy', name='proxy'),
+    url(r'^crono/firewall', 'crono.views.firewall', name='firewall'),
+    url(r'^crono/configuration', 'crono.views.configuration', name='configuration'),
 
     url(r'^menu', menu.represent, name='menu'),
     url(r'^backend/layout', 'crono.views.layout'),
