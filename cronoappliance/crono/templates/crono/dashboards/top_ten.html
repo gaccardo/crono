@@ -9,9 +9,21 @@
 	<script src="{% static 'crono/js/globalize.min.js' %}"></script>
 
 	<script type="text/javascript">
+		var all_url = function(from, to, page) {
+			$(".removeRow3").remove();
+			$.getJSON("{% url 'visitedsitesrange' 999 998 997 %}".replace(999, from).replace(998, to).replace(997, page), function(data) {
+				
+				for (var i = 0; i<data.urls.length; i++) {
+					$('#urls_all tr:last').after('<tr class="removeRow3"><td><a href="">'+data.urls[i].url+'</a></td><td>'+data.urls[i].count+'</td><tr>');
+				}
+
+			});
+		};
+
 		$(document).ready(function() {
 			$("#url_box").hide();
 			$("#url_box_denied").hide();
+			$("#url_box_all").hide();
 
 			$("#datepicker_from").datepicker({
 				"showAnim": "bounce",
@@ -25,11 +37,13 @@
 
 				$(".removeRow").remove();				
 				$(".removeRow2").remove();
+				$(".removeRow3").remove();
 				$("#pieChartContainerDenied").dxPieChart({'dataSource': null});
 				$("#pieChartContainer").dxPieChart({'dataSource': null});
 				
 				$("#url_box").show();
 				$("#url_box_denied").show();
+				$("#url_box_all").show();
 				var from = $("#datepicker_from").val();
 				from = from.replace('/', '_');
 				from = from.replace('/', '_');
@@ -75,12 +89,22 @@
 		        }    
 			    });
 				});
+
+				all_url(from, to, 0);
+
+				$("#pages li").on('click', function(e) {
+					e.preventDefault();
+					var newpage = $(this).text();
+
+					all_url(from, to, newpage-1);					
+				})
+
 			});
 		});
 	</script>
 {% endblock %}
 
-{% block title %}Sites Info{% endblock %}
+{% block title %}Sites Information{% endblock %}
 {% block subtitle %}Sites visited by users{% endblock %}
 
 {% block content %}
@@ -124,7 +148,6 @@
   		</div>
   		<div class="panel-body">
 				<table id="urls_denied" class="table">
-					
 					<thead>
 						<th>URL</th>
 						<th>HITS</th>
@@ -136,5 +159,28 @@
 			</div>
 		</div>
 	</div>
-	
+
+	<div style="clear:both"></div>
+
+	<div id="url_box_all" class="col-lg-12">
+  	<div class="panel panel-primary">
+  		<div class="panel-heading">
+  			<h3 class="panel-title">All visited sites</h3>
+  		</div>
+  		<div class="panel-body">
+				<table id="urls_all" class="table">
+					<thead>
+						<th>URL</th>
+						<th>HITS</th>
+					</thead>
+					<tbody></tbody>
+				</table>
+				<ul id="pages" class="pagination pagination-sm">
+					<li class="active"><a href="">1</a></li>
+					<li class=""><a href="">2</a></li>
+					<li class=""><a href="">3</a></li>
+				</ul>
+  		</div>
+  	</div>
+	</div>	
 {% endblock %}

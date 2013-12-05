@@ -6,7 +6,7 @@ from django.core.context_processors import csrf
 
 # Create your views here.
 
-@login_required
+#@login_required
 def layout(request):
 	context =	context = RequestContext(request, {})
 	return render(request, 'crono/layout.html', context)
