@@ -45,6 +45,14 @@
             $("#rptx-menu-show").show();
           });
 
+          $("#toggle_menu_show").on('click', function(e) {
+            e.preventDefault();
+            $("#rptx-menu").slideToggle('slow');
+            $("#wrapper").animate({'margin-left': '0px'}, 'slow');
+            $("#page-wrapper").animate({'padding-top': '0px'}, 'slow');
+            $("#rptx-menu-show").show();
+          });
+
         })
       });
     </script>
@@ -73,7 +81,7 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul id="rptx-menu" class="nav navbar-nav side-nav"></ul>
           <ul id="rptx-menu-show" class="nav navbar-nav side-nav" style="height: 50px">
-            <li><a href="#"><i class="fa"></i> Show menu </a></li>
+            <li id="toggle_menu_show"><a href="#"><i class="fa"></i> Show menu </a></li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right navbar-user">
