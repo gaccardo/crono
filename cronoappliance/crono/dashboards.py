@@ -9,12 +9,12 @@ from crono.models import Access
 
 import time
 
-#######################
-# URL: top10 frontend #
-#######################
+##############
+# URL: top10 #
+##############
 def get_top_ten(request):
 	context = RequestContext(request, {})
-	return render(request, 'crono/dashboards/top_ten.html', context)
+	return render(request, 'crono/dashboards/sites_info.html', context)
 
 def get_top_ten_range(request, date_from, date_to):
 	timestamp_from = time.mktime( time.strptime(date_from, '%m_%d_%Y') )
@@ -68,6 +68,31 @@ def get_traffic_range(request, date_from, date_to):
 		result += access.data
 
 	return HttpResponse(simplejson.dumps({'traffic': result}))
-###########################
-# / URL: top10 frontend / #
-###########################
+##################
+# / URL: top10 / #
+##################
+
+###############
+# URL: sites  #
+###############
+def site(request, site):
+	site = site.upper()
+	site = site.replace('_','.')
+	context = RequestContext(request, {'sitename': site})
+	return render(request, 'crono/dashboards/site.html', context)
+
+def sitebackend(request, site, date_from, date_to):
+	timestamp_from = time.mktime( time.strptime(date_from, '%m_%d_%Y') )
+	timestamp_to = time.mktime( time.strptime(date_to, '%m_%d_%Y') )
+	accesses = Access.objects.filter(time__gte=timestamp_from,
+		                               time__lt=timestamp_to,
+		                               url=site.replace('_','.')).values('ip').annotate(count=Count('ip'))
+	result_accesses = list()
+
+	for acc in accesses:
+		result_accesses.append({'ip': acc['ip'], 'count': acc['count']})
+
+	return HttpResponse(simplejson.dumps({'ips': result_accesses}))
+##################
+# / URL: sites / #
+##################

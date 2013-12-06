@@ -13,7 +13,9 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^crono/dashboard/top10/', 'crono.dashboards.get_top_ten', name='top10'),
+    url(r'^crono/dashboard/site/(?P<site>\w+)/', 'crono.dashboards.site', name='site'),
     url(r'^crono/dashboard', 'crono.views.dashboard', name='dashboard'),
+
     url(r'^crono/proxy', 'crono.views.proxy', name='proxy'),
     url(r'^crono/firewall', 'crono.views.firewall', name='firewall'),
     url(r'^crono/configuration', 'crono.views.configuration', name='configuration'),
@@ -28,7 +30,8 @@ urlpatterns = patterns('',
     url(r'^backend/top10deniedbyrange/(?P<date_from>\w+)/(?P<date_to>\w+)', 'crono.dashboards.get_top_ten_denied_range', name='top10deniedbyrange'),
     url(r'^backend/visitedsitesrange/(?P<date_from>\w+)/(?P<date_to>\w+)/(?P<page>\w+)', 'crono.dashboards.get_sites_range', name='visitedsitesrange'),
     url(r'^backend/trafficrange/(?P<date_from>\w+)/(?P<date_to>\w+)', 'crono.dashboards.get_traffic_range', name='trafficrange'),
-    
+    url(r'^backend/sitebackend/(?P<site>\w+)/(?P<date_from>\w+)/(?P<date_to>\w+)', 'crono.dashboards.sitebackend', name='sitebackend'),
+
     #url(r'^couch/last_key', 'crono.couch.last_key', name='last_key'),
 	#url(r'^couch/denied_requests', 'crono.couch.denied_requests'),
 	#url(r'^couch/misses_requests/$', 'crono.couch.misses_requests'),

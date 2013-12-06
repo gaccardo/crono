@@ -1,0 +1,33 @@
+{% extends 'crono/layout.html' %}
+{% load staticfiles %}
+
+{% block head %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#datepicker_from").datepicker({
+				"showAnim": "bounce",
+			});
+			$("#datepicker_to").datepicker({
+				"showAnim": "bounce",
+			});
+		})
+	</script>
+	$(document)
+{% endblock %}
+
+{% block title %}<i class="fa fa-check" style="color: #069600;"></i> {{sitename}}{% endblock %}
+{% block subtitle %}Website usage information{% endblock %}
+
+{% block content %}
+	<div class="col-lg-6">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				Date from: <input type="text" id="datepicker_from">
+				Date to: <input type="text" id="datepicker_to">
+				<button id="datepicker_select">Filter</button><br>
+			</div>
+		</div>
+	</div>
+
+	<div style="clear:both"></div>
+{% endblock %}
