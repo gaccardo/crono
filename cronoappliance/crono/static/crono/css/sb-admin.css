@@ -161,3 +161,23 @@ table.tablesorter thead tr th:hover {
 #toggle_menu, #toggle_menu_show {
   font-size: 10px;
 }
+
+.loginmsg {
+  position: absolute;
+  z-index:2;
+  top: 10px;
+  right: 15px;
+  box-shadow: 2px 2px 5px #999;
+}
+
+#loginbox {
+  border: 1px solid;
+  width: 520px;
+  padding: 13px 0px 0px 25px;
+  background-color: #EFEDED;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  box-shadow: 4px 4px 5px #999;
+  margin: 40px 0px 0px 230px;
+}

@@ -2,6 +2,10 @@
 {% load staticfiles %}
 
 {% block head %}
+	<script src="{% static 'crono/js/dx.chartjs.debug.js' %}"></script>
+	<script src="{% static 'crono/js/dx.chartjs.js' %}"></script>
+	<script src="{% static 'crono/js/knockout-2.2.1.js' %}"></script>
+	<script src="{% static 'crono/js/globalize.min.js' %}"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#ip_box").hide();
@@ -28,9 +32,22 @@
 
 				$.getJSON("{% url 'sitebackend' 997 999 998 %}".replace(999, from).replace(998, to).replace(997, '{{originalsitename}}'), function(data) {
 					console.log(data);
+					var pieChartDataSource = [];
 					for (var i = 0; i<data.ips.length; i++) {
 						$('#ips tr:last').after('<tr class="removeRow"><td>'+data.ips[i].ip+'</td><td>'+data.ips[i].count+'</td><tr>');
+						pieChartDataSource.push({'category': data.ips[i].ip, 'value': data.ips[i].count})
 					}
+				
+					$("#pieChartContainer").dxPieChart({
+		        dataSource: pieChartDataSource,
+		        series: {
+		            argumentField: 'category',
+		            valueField: 'value',
+		            label: {
+		            	visible: false,
+		            }
+		        }
+		      });    
 				});
 				$("#ip_box").show();
 			});
