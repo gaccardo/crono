@@ -10,6 +10,20 @@
 		$(document).ready(function() {
 			$("#ip_box").hide();
 
+			var date_from = "{{date_from}}";
+			var date_to = "{{date_to}}";
+			var trigger = 0;
+
+			if (date_from != '') {
+				$("#datepicker_from").val(date_from.replace('_','/').replace('_','/'));
+				trigger += 1;				
+			}
+
+			if (date_to != '') {
+				$("#datepicker_to").val(date_to.replace('_','/').replace('_','/'));
+				trigger += 1;
+			}
+
 			$("#datepicker_from").datepicker({
 				"showAnim": "bounce",
 			});
@@ -51,6 +65,10 @@
 				});
 				$("#ip_box").show();
 			});
+
+			if (trigger == 2) {
+				$("#datepicker_select").trigger("click");
+			}
 		})
 	</script>
 	$(document)
