@@ -76,6 +76,9 @@ def get_traffic_range(request, date_from, date_to):
 # URL: sites  #
 ###############
 def site(request, site):
+	date_from = request.GET.get('from', None)
+
+	print date_from
 	site_orig = site
 	site = site.upper()
 	site = site.replace('_','.')
