@@ -76,9 +76,10 @@ def get_traffic_range(request, date_from, date_to):
 # URL: sites  #
 ###############
 def site(request, site):
+	site_orig = site
 	site = site.upper()
 	site = site.replace('_','.')
-	context = RequestContext(request, {'sitename': site})
+	context = RequestContext(request, {'sitename': site, 'originalsitename': site_orig})
 	return render(request, 'crono/dashboards/site.html', context)
 
 def sitebackend(request, site, date_from, date_to):

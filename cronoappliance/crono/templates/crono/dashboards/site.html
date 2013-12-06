@@ -4,11 +4,35 @@
 {% block head %}
 	<script type="text/javascript">
 		$(document).ready(function() {
+			$("#ip_box").hide();
+
 			$("#datepicker_from").datepicker({
 				"showAnim": "bounce",
 			});
 			$("#datepicker_to").datepicker({
 				"showAnim": "bounce",
+			});
+
+			$("#datepicker_select").on('click', function(e) {
+				e.preventDefault();
+				$(".removeRow").remove();			
+				//$("#pieChartContainer").dxPieChart({'dataSource': null});
+
+				var from = $("#datepicker_from").val();
+				from = from.replace('/', '_');
+				from = from.replace('/', '_');
+				
+				var to = $("#datepicker_to").val();
+				to = to.replace('/', '_');
+				to = to.replace('/', '_');
+
+				$.getJSON("{% url 'sitebackend' 997 999 998 %}".replace(999, from).replace(998, to).replace(997, '{{originalsitename}}'), function(data) {
+					console.log(data);
+					for (var i = 0; i<data.ips.length; i++) {
+						$('#ips tr:last').after('<tr class="removeRow"><td>'+data.ips[i].ip+'</td><td>'+data.ips[i].count+'</td><tr>');
+					}
+				});
+				$("#ip_box").show();
 			});
 		})
 	</script>
@@ -30,4 +54,23 @@
 	</div>
 
 	<div style="clear:both"></div>
+
+  <div id="ip_box" class="col-lg-5">
+  	<div class="panel panel-primary">
+  		<div class="panel-heading">
+  			<h3 class="panel-title">Users that visited this site</h3>
+  		</div>
+  		<div class="panel-body">
+				<table id="ips" class="table">
+					
+					<thead>
+						<th>IP</th>
+						<th>HITS</th>
+					</thead>
+					<tbody></tbody>
+				</table>
+				<div id="pieChartContainer" style="float:left;max-width:525px;height: 200px;"></div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
