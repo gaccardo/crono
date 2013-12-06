@@ -103,13 +103,13 @@
 					$("#charttraffic").dxCircularGauge({
 						scale: {
 							startValue: '0',
-							endValue: '1000',
+							endValue: (data.traffic/1024/1024) + (data.traffic/1024/1024)/3,
 							majorTick: {
-								tickInterval: 200,
+								tickInterval: (data.traffic/1024/1024) % 5,
 							},
 							minorTick: {
 								visible: true,
-								tickInterval: 50,
+								tickInterval: (data.traffic/1024/1024) % 10,
 							}
 						},
 						needles: [
