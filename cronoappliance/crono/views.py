@@ -40,6 +40,7 @@ def login_user(request):
     username = password = ''
     c = {}
     c.update(csrf(request))
+    state_code = 0
     if request.POST:
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -49,12 +50,16 @@ def login_user(request):
             if user.is_active:
                 login(request, user)
                 state = "You're successfully logged in!"
+                state_code = 0
             else:
                 state = "Your account is not active, please contact the site admin."
+               	state_code = 1
         else:
             state = "Your username and/or password were incorrect."
+            state_code = 1
 
-    return render_to_response('crono/auth.html', RequestContext(request, {'state':state, 'username': username}))
+    return render_to_response('crono/auth.html', RequestContext(request, {'state':state, 'username': username,
+    	                                                                    'state_code': state_code}))
 
 def logout_user(request):
 	logout(request)

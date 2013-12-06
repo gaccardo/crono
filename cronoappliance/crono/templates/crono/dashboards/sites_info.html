@@ -22,7 +22,14 @@
 		};
 
 		$(document).ready(function() {
+<<<<<<< HEAD:cronoappliance/crono/templates/crono/dashboards/top_ten.html
 			var sitesInfo = new SitesInfo();
+=======
+			$("#url_box").hide();
+			$("#url_box_denied").hide();
+			$("#url_box_all").hide();
+			$("#traffic_total").hide();
+>>>>>>> f3f8c7bbebee228d0024775131075173ec548912:cronoappliance/crono/templates/crono/dashboards/sites_info.html
 
 			sitesInfo.hideBoxes();
 			sitesInfo.bindPickers();
@@ -114,6 +121,7 @@
 				$("#url_box").show();
 				$("#url_box_denied").show();
 				$("#url_box_all").show();
+				$("#traffic_total").show();
 				var from = $("#datepicker_from").val();
 				from = from.replace('/', '_');
 				from = from.replace('/', '_');
@@ -125,7 +133,9 @@
 				$.getJSON("{% url 'top10byrange' 999 998 %}".replace(999, from).replace(998, to), function(data) {
 					var pieChartDataSource = [];					
 					for (var i = 0; i<data.urls.length; i++) {
-						$('#urls tr:last').after('<tr class="removeRow"><td><a href="">'+data.urls[i].url+'</a></td><td>'+data.urls[i].count+'</td><tr>');
+						var url = "{% url 'site' 990 %}?from=XX&to=YY".replace(990, data.urls[i].url.replace('.','_')).replace('XX', from).replace('YY', to);
+						console.log(url);
+						$('#urls tr:last').after('<tr class="removeRow"><td><a href="'+url+'">'+data.urls[i].url+'</a></td><td>'+data.urls[i].count+'</td><tr>');
 						pieChartDataSource.push({'category': data.urls[i].url, 'value': data.urls[i].count})
 					}
 
@@ -173,13 +183,13 @@
 					$("#charttraffic").dxCircularGauge({
 						scale: {
 							startValue: '0',
-							endValue: '1000',
+							endValue: (data.traffic/1024/1024) + (data.traffic/1024/1024)/3,
 							majorTick: {
-								tickInterval: 200,
+								tickInterval: (data.traffic/1024/1024) % 5,
 							},
 							minorTick: {
 								visible: true,
-								tickInterval: 50,
+								tickInterval: 0.1//(data.traffic/1024/1024) % 10,
 							}
 						},
 						needles: [
@@ -188,7 +198,44 @@
 						markers: [
 							{'value': data.traffic/1024/1024},
 						],
+						title: {
+							text: 'All Traffic',
+							font: {
+								family: 'Zapf-Chancery, cursive',
+								weight: 400,
+								color: 'forestgreen',
+								size: 14
+							}
+						}
 
+					});
+					$("#charttraffic2").dxCircularGauge({
+						scale: {
+							startValue: '0',
+							endValue: (data.traffic/1024/1024) + (data.traffic/1024/1024)/3,
+							majorTick: {
+								tickInterval: (data.traffic/1024/1024) % 5,
+							},
+							minorTick: {
+								visible: true,
+								tickInterval: (data.traffic/1024/1024) % 10,
+							}
+						},
+						needles: [
+							{'value': data.traffic/1024/1024, width: 6},
+						],
+						markers: [
+							{'value': data.traffic/1024/1024},
+						],
+						title: {
+							text: 'Denies',
+							font: {
+								family: 'Zapf-Chancery, cursive',
+								weight: 400,
+								color: 'forestgreen',
+								size: 14
+							}
+						}
 					});
 				});
 
@@ -277,13 +324,22 @@
   	</div>
 	</div>
 
+<<<<<<< HEAD:cronoappliance/crono/templates/crono/dashboards/top_ten.html
 	<div id="traffic_total" class="col-lg-4">
+=======
+	<div id="traffic_total" class="col-lg-7">
+>>>>>>> f3f8c7bbebee228d0024775131075173ec548912:cronoappliance/crono/templates/crono/dashboards/sites_info.html
   	<div class="panel panel-primary">
   		<div class="panel-heading">
   			<h3 class="panel-title">Traffic Consumption (GB)</h3>
   		</div>
   		<div class="panel-body">
+<<<<<<< HEAD:cronoappliance/crono/templates/crono/dashboards/top_ten.html
   			<div id="charttraffic" style="width: 300px;"></div>
+=======
+  			<div id="charttraffic" style="width: 350px;float:left;"></div>
+  			<div id="charttraffic2" style="width: 350px;float:left;"></div>
+>>>>>>> f3f8c7bbebee228d0024775131075173ec548912:cronoappliance/crono/templates/crono/dashboards/sites_info.html
   		</div>
   	</div>
 	</div>

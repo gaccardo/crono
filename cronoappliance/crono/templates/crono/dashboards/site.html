@@ -1,0 +1,111 @@
+{% extends 'crono/layout.html' %}
+{% load staticfiles %}
+
+{% block head %}
+	<script src="{% static 'crono/js/dx.chartjs.debug.js' %}"></script>
+	<script src="{% static 'crono/js/dx.chartjs.js' %}"></script>
+	<script src="{% static 'crono/js/knockout-2.2.1.js' %}"></script>
+	<script src="{% static 'crono/js/globalize.min.js' %}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#ip_box").hide();
+
+			var date_from = "{{date_from}}";
+			var date_to = "{{date_to}}";
+			var trigger = 0;
+
+			if (date_from != '') {
+				$("#datepicker_from").val(date_from.replace('_','/').replace('_','/'));
+				trigger += 1;				
+			}
+
+			if (date_to != '') {
+				$("#datepicker_to").val(date_to.replace('_','/').replace('_','/'));
+				trigger += 1;
+			}
+
+			$("#datepicker_from").datepicker({
+				"showAnim": "bounce",
+			});
+			$("#datepicker_to").datepicker({
+				"showAnim": "bounce",
+			});
+
+			$("#datepicker_select").on('click', function(e) {
+				e.preventDefault();
+				$(".removeRow").remove();			
+				//$("#pieChartContainer").dxPieChart({'dataSource': null});
+
+				var from = $("#datepicker_from").val();
+				from = from.replace('/', '_');
+				from = from.replace('/', '_');
+				
+				var to = $("#datepicker_to").val();
+				to = to.replace('/', '_');
+				to = to.replace('/', '_');
+
+				$.getJSON("{% url 'sitebackend' 997 999 998 %}".replace(999, from).replace(998, to).replace(997, '{{originalsitename}}'), function(data) {
+					console.log(data);
+					var pieChartDataSource = [];
+					for (var i = 0; i<data.ips.length; i++) {
+						$('#ips tr:last').after('<tr class="removeRow"><td>'+data.ips[i].ip+'</td><td>'+data.ips[i].count+'</td><tr>');
+						pieChartDataSource.push({'category': data.ips[i].ip, 'value': data.ips[i].count})
+					}
+				
+					$("#pieChartContainer").dxPieChart({
+		        dataSource: pieChartDataSource,
+		        series: {
+		            argumentField: 'category',
+		            valueField: 'value',
+		            label: {
+		            	visible: false,
+		            }
+		        }
+		      });    
+				});
+				$("#ip_box").show();
+			});
+
+			if (trigger == 2) {
+				$("#datepicker_select").trigger("click");
+			}
+		})
+	</script>
+	$(document)
+{% endblock %}
+
+{% block title %}<i class="fa fa-check" style="color: #069600;"></i> {{sitename}}{% endblock %}
+{% block subtitle %}Website usage information{% endblock %}
+
+{% block content %}
+	<div class="col-lg-6">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				Date from: <input type="text" id="datepicker_from">
+				Date to: <input type="text" id="datepicker_to">
+				<button id="datepicker_select">Filter</button><br>
+			</div>
+		</div>
+	</div>
+
+	<div style="clear:both"></div>
+
+  <div id="ip_box" class="col-lg-5">
+  	<div class="panel panel-primary">
+  		<div class="panel-heading">
+  			<h3 class="panel-title">Users that visited this site</h3>
+  		</div>
+  		<div class="panel-body">
+				<table id="ips" class="table">
+					
+					<thead>
+						<th>IP</th>
+						<th>HITS</th>
+					</thead>
+					<tbody></tbody>
+				</table>
+				<div id="pieChartContainer" style="float:left;max-width:525px;height: 200px;"></div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
