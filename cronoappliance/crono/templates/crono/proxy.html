@@ -1,10 +1,66 @@
 {% extends 'crono/layout.html' %}
 {% load staticfiles %}
 
-{% block head %}{% endblock %}
+{% block head %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#myTab a').click(function (e) {
+  			e.preventDefault()
+  			$(this).tab('show')
+			})
+		});
+	</script>
+{% endblock %}
 
 {% block title %}Proxy Configuration{% endblock %}
 {% block subtitle %}Set how your system is used{% endblock %}
 
 {% block content %}
+
+<ul id="myTab" class="nav nav-tabs">
+  <li class="active"><a href="#sites">Blocked Sites</a></li>
+  <li><a href="#users">Users</a></li>
+  <li><a href="#network">Network</a></li>
+  <li><a href="#speed">Speed</a></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane fade in active" id="sites">
+  	<div class="row">
+			<div class="col-lg-12">
+				<br><br>
+				<div class="panel panel-danger">
+					<div class="panel-heading">
+						<h3 class="panel-title">Blocked Sites</h3>
+					</div>
+					<div class="panel-body">
+						<table id="urls" class="table">
+							<thead>
+								<th>URL</th>
+								<th>ACTIONS</th>
+							</thead>
+							<tbody>
+								<tr>
+									<td>http://www.facebook.com</td>
+									<td><span class="glyphicon glyphicon-minus-sign"></span></td>
+								</tr>
+							</tbody>
+						</table>
+						<div id="pieChartContainer" style="float:left;max-width:525px;height: 200px;"></div>
+					</div>
+				</div>
+  		</div>
+  	</div>
+ 	</div>
+  <div class="tab-pane fade" id="users">
+  	b
+  </div>
+  <div class="tab-pane fade" id="network">
+  	c
+  </div>
+  <div class="tab-pane fade" id="speed">
+  	d
+  </div>
+</div>
+
 {% endblock %}
