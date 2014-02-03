@@ -21,7 +21,7 @@ class LogGenerator( object ):
 		LINES = 1500
 
 		while LINES > 0:
-			f_p.write("%.10f\t %s %s %s %s %s %s %s %s %s\n" % ( time.time(),
+			line = "%.10f\t %s %s %s %s %s %s %s %s %s\n" % ( time.time(),
 			                                                random.randint(50, 2000),
 			                                                random.choice(IPS),
 			                                                random.choice(CODES),
@@ -30,7 +30,11 @@ class LogGenerator( object ):
 			                                                random.choice(DOMAINS),
 			                                                '-',
 			                                                'DIRECT/125.23.216.203',
-			                                                'text/html'))
+			                                                'text/html')
+			print line.strip(), "Line :: %d" % LINES
+			time.sleep(0.01)
+			f_p.write(line)
+
 			LINES -= 1
 		
 		f_p.close()
