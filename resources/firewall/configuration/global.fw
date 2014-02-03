@@ -1,0 +1,34 @@
+#!/bin/bash
+
+#### GLOBAL ####
+
+### System configuration ###
+
+# Interfaces forwarding
+IP_FORWARD="1"
+
+# Executables
+IT="/sbin/iptables"
+IP="/sbin/ip"
+
+### User objects ###
+
+## Interfaces
+IF_IPLAN="eth0"
+IF_FIBER="eth1"
+IF_LOCAL="eth2"
+
+## Gatways
+GW_IPLAN="10.10.10.1"
+GW_FIBER="10.10.11.1"
+GW_LOCAL="$GW_IPLAN"
+
+## Servers
+
+## Networks
+NET_RRHH="192.168.0.0/24"
+NET_IT="192.168.1.0/24"
+
+## Routing tables
+TBL_IPLAN_USERS="iplan"
+TBL_FIBERTEL_USERS="fibertel"
