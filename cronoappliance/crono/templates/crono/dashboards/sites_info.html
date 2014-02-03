@@ -7,6 +7,7 @@
 	<script src="{% static 'crono/js/dx.chartjs.js' %}"></script>
 	<script src="{% static 'crono/js/knockout-2.2.1.js' %}"></script>
 	<script src="{% static 'crono/js/globalize.min.js' %}"></script>
+	<script src="{% static 'crono/js/sitesinfo.js' %}"></script>
 
 	<script type="text/javascript">
 		var all_url = function(from, to, page) {
@@ -26,14 +27,82 @@
 			$("#url_box_all").hide();
 			$("#traffic_total").hide();
 
-			$("#datepicker_from").datepicker({
-				"showAnim": "bounce",
-			});
-			$("#datepicker_to").datepicker({
-				"showAnim": "bounce",
+			$("#datepicker_select").on('click', function(event) {
+				var range = sitesInfo.dateSelected(event);
+				var from = range['from']
+				var to = range['to']
+
+				$.getJSON("{% url 'top10byrange' 999 998 %}".replace(999, from).replace(998, to), function(data) {
+					var pieChartDataSource = [];					
+					for (var i = 0; i<data.urls.length; i++) {
+						$('#urls tr:last').after('<tr class="removeRow"><td><a href="">'+data.urls[i].url+'</a></td><td>'+data.urls[i].count+'</td><tr>');
+						pieChartDataSource.push({'category': data.urls[i].url, 'value': data.urls[i].count})
+					}
+
+					$("#pieChartContainer").dxPieChart({
+		        dataSource: pieChartDataSource,
+		        series: {
+		            argumentField: 'category',
+		            valueField: 'value',
+		            label: {
+		            	visible: false,
+		            }
+		        }    
+			    });
+				});
+
+				$.getJSON("{% url 'top10deniedbyrange' 999 998 %}".replace(999, from).replace(998, to), function(data) {
+					var pieChartDataSource = [];
+					for (var i = 0; i<data.urls.length; i++) {
+						$('#urls_denied tr:last').after('<tr class="removeRow2"><td><a href="">'+data.urls[i].url+'</a></td><td>'+data.urls[i].count+'</td><tr>');
+						pieChartDataSource.push({'category': data.urls[i].url, 'value': data.urls[i].count})
+					}
+
+					$("#pieChartContainerDenied").dxPieChart({
+		        dataSource: pieChartDataSource,
+		        series: {
+		            argumentField: 'category',
+		            valueField: 'value',
+		            label: {
+		            	visible: false,
+		            }
+		        }    
+			    });
+				});
+
+				all_url(from, to, 0);
+
+				$("#pages li").on('click', function(e) {
+					e.preventDefault();
+					var newpage = $(this).text();
+					all_url(from, to, newpage-1);					
+				})
+
+				$.getJSON("{% url 'trafficrange' 999 998 %}".replace(999, from).replace(998, to), function(data) {
+					$("#charttraffic").dxCircularGauge({
+						scale: {
+							startValue: '0',
+							endValue: '1000',
+							majorTick: {
+								tickInterval: 200,
+							},
+							minorTick: {
+								visible: true,
+								tickInterval: 50,
+							}
+						},
+						needles: [
+							{'value': data.traffic/1024/1024, width: 6},
+						],
+						markers: [
+							{'value': data.traffic/1024/1024},
+						],
+
+					});
+				});
 			});
 
-			$("#datepicker_select").on('click', function(e) {
+			/*$("#datepicker_select").on('click', function(e) {
 				e.preventDefault();
 
 				$(".removeRow").remove();				
@@ -163,7 +232,7 @@
 					});
 				});
 
-			});
+			});*/
 		});
 	</script>
 {% endblock %}
@@ -256,7 +325,7 @@
   		<div class="panel-body">
   			<div id="charttraffic" style="width: 350px;float:left;"></div>
   			<div id="charttraffic2" style="width: 350px;float:left;"></div>
-  		</div>
+			</div>
   	</div>
 	</div>
 	
