@@ -1,11 +1,46 @@
 #!/bin/bash
 
-#### NAT ###
+function start
+{
+	#### NAT ###
 
-### PREROUTING ###
+	### PREROUTING ###
 
-### INPUT ###
+	### INPUT ###
 
-### OUTPUT ###
+	### OUTPUT ###
 
-### POSTROUTING ###
+	### POSTROUTING ###
+
+	# All users routed to firewall
+	for net in $NETS_FIBER;
+	do
+		$IT -t nat -A POSTROUTING -o $IF_FIBER -s $net -j MASQUERADE
+	done
+	echo -n "."
+
+	# All users routed to iplan
+	for net in $NETS_IPLAN;
+	do
+		$IT -t nat -A POSTROUTING -o $IF_IPLAN -s $net -j MASQUERADE
+	done
+	echo -n "."
+}
+
+function stop
+{
+	# Clean all targets in NAT table
+	$IT -t nat -F
+}
+
+case $STATUS in 
+
+	0)
+		start
+	;;
+
+	1)
+		stop
+	;;
+
+esac
