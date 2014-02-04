@@ -11,6 +11,11 @@ IP_FORWARD="1"
 IT="/sbin/iptables"
 IP="/sbin/ip"
 
+# POLICIES
+INPUT_POLICY="DROP"
+FORWARD_POLICY="DROP"
+OUTPUT_POLICY="ACCEPT"
+
 ### User objects ###
 
 ## Interfaces

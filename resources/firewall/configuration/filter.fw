@@ -1,9 +1,29 @@
 #!/bin/bash
 
-#### FILTER ###
+function start
+{
+	#### FILTER ###
 
-### INPUT ###
+	### INPUT ###
 
-### FORWARD ###
+	### FORWARD ###
 
-### OUTPUT ###
+	### OUTPUT ###
+}
+
+function stop
+{
+	$IT -t filter -F 
+}
+
+case $STATUS in 
+
+	0)
+		start
+	;;
+
+	1)
+		stop
+	;;
+
+esac

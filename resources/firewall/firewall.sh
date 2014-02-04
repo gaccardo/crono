@@ -94,6 +94,11 @@ function stop
 		let "ERROR++"
 	fi
 
+	# Policies
+	#$IT -P INPUT $INPUT_POLICY
+	#$IT -P FORWARD $INPUT_FORWARD
+	#$IT -P OUTPUT $INPUT_OUTPUT
+
 	if [ "$ERROR" -gt 0 ];
 	then
 		exit -1
