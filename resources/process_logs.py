@@ -9,7 +9,7 @@ from couchbase.exceptions import KeyExistsError
 
 class Access( object ):
 
-  def __init__(self, time, elapsed, ip, code, data, method, url):
+  def __init__(self, time, elapsed, ip, code, data, method, url, user):
     self.time = time
     self.elapsed = elapsed
     self.ip = ip
@@ -17,6 +17,7 @@ class Access( object ):
     self.data = data
     self.method = method
     self.url = url
+    self.user = user
 
   def get_time(self):
     return self.time
@@ -39,10 +40,13 @@ class Access( object ):
   def get_url(self):
     return self.url
 
+  def get_user(self):
+    return self.user
+
   def get_document(self):
     return {'time': self.time, 'elapsed': int(self.elapsed), 'ip': self.ip,
             'url': self.url, 'code': self.code, 'data': int(self.data), 
-            'method': self.method}
+            'method': self.method, 'user': self.user}
 
   def save(self, database):
     #database.add(self.time, self, format=FMT_PICKLE)
@@ -86,7 +90,7 @@ class SquidLogParser( object ):
           if rrr[0].split('\n')[1] >= self.get_last_key():
             access = Access(rrr[0].split('\n')[1], 
                             rrr[1], rrr[2], rrr[3], 
-                            rrr[4], rrr[5], rrr[6])
+                            rrr[4], rrr[5], rrr[6], rrr[7])
             access.save(self.cb)
 
             if access.get_time() > last_key:
