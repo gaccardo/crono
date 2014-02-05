@@ -115,12 +115,31 @@ class SquidConfigParser( object ):
 
 		return new_sections
 
+	def __generate_json(self, config):
+		output = dict()
+		output['safeports'] = list()
+		output['httpaccess'] = list()
+		output['networks'] = list()
+
+		for entry in config['safeports']:
+			output['safeports'].append({'acl': entry.get_acl(),
+				                          'port': entry.get_port()})
+
+		for entry in config['httpaccess']:
+			output['httpaccess'].append({'permission': entry.get_permission(),
+				                          'acl': entry.get_acl()})
+
+		for entry in config['networks']:
+			output['networks'].append({'name': entry.get_name(),
+				                         'net': entry.get_new()})
+
+		return output
+
 	def run(self):
 		config_raw = self.__get_configfile_content()
 		config = self.__get_sections(config_raw)
 		config = self.__get_config()
-
-		print config
+		config = self.__generate_json(config)
 
 
 if __name__ == '__main__':

@@ -18,7 +18,7 @@ class LogGenerator( object ):
 
 	def run(self):
 		f_p = open(self.file, 'w')
-		LINES = 1500
+		LINES = 150000
 
 		while LINES > 0:
 			line = "%.10f\t %s %s %s %s %s %s %s %s %s\n" % ( time.time(),
@@ -32,7 +32,7 @@ class LogGenerator( object ):
 			                                                'DIRECT/125.23.216.203',
 			                                                'text/html')
 			print line.strip(), "Line :: %d" % LINES
-			time.sleep(0.01)
+			#time.sleep(0.01)
 			f_p.write(line)
 
 			LINES -= 1

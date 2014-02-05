@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 
-from crono import views, menu, dashboards
+from crono import views, menu, dashboards, users
 
 from django.contrib import admin
 admin.autodiscover()
@@ -11,6 +11,8 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^crono/users/', 'crono.users.get_users', name='getusers'),
 
     url(r'^crono/dashboard/top10/', 'crono.dashboards.get_top_ten', name='top10'),
     url(r'^crono/dashboard/site/(?P<site>\w+)/', 'crono.dashboards.site', name='site'),
