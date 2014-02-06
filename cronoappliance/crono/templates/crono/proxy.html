@@ -4,16 +4,21 @@
 {% block head %}
 	<script type="text/javascript">
 		$(document).ready(function() {
+			var users_tab_full = false;
 			$('#myTab a').click(function (e) {
 	  			e.preventDefault()
 	  			$(this).tab('show')
-			})
 
-			$.getJSON("{% url 'all' %}", function(users) {
-				$.each(users, function(i, user) {
-					$("#users-table tbody").append("<tr><td>"+user+"</td><td><a>DEL</a>  <a>MOD</a></td></tr>");
-				});
-			});
+				if (e.currentTarget.hash == '#users' && !users_tab_full) {
+					$.getJSON("{% url 'all' %}", function(users) {
+						$.each(users, function(i, user) {
+							$("#users-table tbody").append("<tr><td>"+user+"</td><td><a>DEL</a>  <a>MOD</a></td></tr>");
+						});
+					});
+				}
+
+				users_tab_full = true;
+			})
 		});
 	</script>
 {% endblock %}
