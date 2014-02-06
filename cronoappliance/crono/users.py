@@ -8,9 +8,9 @@ from django.utils import simplejson
 from crono.models import Access
 from squid import squid_helper
 
+sq_helper = squid_helper.SquidHelper()
 
 def all(request):
-    sq_helper = squid_helper.SquidHelper()
     return HttpResponse(sq_helper.get_users_as_json())
 
 def update(request):

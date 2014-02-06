@@ -18,7 +18,7 @@ urlpatterns = patterns('',
     url(r'^crono/users/', 'crono.users.all', name='all'),
 
     url(r'^crono/dashboard/top10/', 'crono.dashboards.get_top_ten', name='top10'),
-    url(r'^crono/dashboard/site/(?P<site>\w+)/', 'crono.dashboards.site', name='site'),
+    url(r'^crono/dashboard/site/(?P<site>[-A-Za-z0-9_]+)/', 'crono.dashboards.site', name='site'),
     url(r'^crono/dashboard', 'crono.views.dashboard', name='dashboard'),
 
     url(r'^crono/proxy', 'crono.views.proxy', name='proxy'),
