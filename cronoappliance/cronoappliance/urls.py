@@ -12,7 +12,10 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^crono/users/', 'crono.users.get_users', name='getusers'),
+    url(r'^crono/users/update', 'crono.users.update', name='update'),
+    url(r'^crono/users/add', 'crono.users.add', name='add'),
+    url(r'^crono/users/delete', 'crono.users.delete', name='delete'),
+    url(r'^crono/users/', 'crono.users.all', name='all'),
 
     url(r'^crono/dashboard/top10/', 'crono.dashboards.get_top_ten', name='top10'),
     url(r'^crono/dashboard/site/(?P<site>\w+)/', 'crono.dashboards.site', name='site'),

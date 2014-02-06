@@ -8,7 +8,7 @@ from django.utils import simplejson
 from crono.models import Access
 
 
-def get_users(request):
+def all(request):
     users_database_pointer = open('/etc/squid3/passwd', 'r')
     users_database = users_database_pointer.readlines()
     users_database_pointer.close()
@@ -18,3 +18,12 @@ def get_users(request):
         users.append(line.split(':')[0])
 
     return HttpResponse(simplejson.dumps({'users': users}))
+
+def update(request):
+    return HttpResponse('update')
+
+def add(request):
+    return HttpResponse('add')
+
+def delete(request):
+    return HttpResponse('delete')
