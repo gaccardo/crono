@@ -1,14 +1,24 @@
 from django.utils import simplejson
+from passlib.apache import HtpasswdFile
+
+USERS_DATABASE = '/etc/squid3/passwd'
 
 class SquidHelper( object ):
-    
+
+    def __init__(self, database):
+        self.ht = HtpasswdFile(database, new=False)
+
+    def user_exists(self, user):
+        return user in simplejson.loads(self.get_users_as_json())['users']
+
     def get_users_as_json(self):
-        users_database_pointer = open('/etc/squid3/passwd', 'r')
-        users_database = users_database_pointer.readlines()
-        users_database_pointer.close()
-        users = list()
+        return simplejson.dumps({'users': self.ht.users()})
 
-        for line in users_database:
-            users.append(line.split(':')[0])
+    def save(self, user, password):
+        self.ht.set_password(user, password)
+        self.ht.save()
 
-        return simplejson.dumps({'users': users})
+
+if __name__ == '__main__':
+    sh = SquidHelper(USERS_DATABASE)
+    print sh.get_users_as_json()
