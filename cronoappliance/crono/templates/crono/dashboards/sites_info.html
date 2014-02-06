@@ -57,7 +57,7 @@
 				$.getJSON("{% url 'top10byrange' 999 998 %}".replace(999, from).replace(998, to), function(data) {
 					var pieChartDataSource = [];					
 					for (var i = 0; i<data.urls.length; i++) {
-						var url = "{% url 'site' 990 %}?from=XX&to=YY".replace(990, data.urls[i].url.replace('.','_')).replace('XX', from).replace('YY', to);
+						var url = "{% url 'site' 990 %}?from=XX&to=YY".replace(990, data.urls[i].url.replace(/\./g,'_')).replace('XX', from).replace('YY', to);
 						console.log(url);
 						$('#urls tr:last').after('<tr class="removeRow"><td><a href="'+url+'">'+data.urls[i].url+'</a></td><td>'+data.urls[i].count+'</td><tr>');
 						pieChartDataSource.push({'category': data.urls[i].url, 'value': data.urls[i].count})
