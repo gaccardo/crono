@@ -11,9 +11,10 @@
 
 				if (e.currentTarget.hash == '#users' && !users_tab_full) {
 					$.getJSON("{% url 'all' %}", function(users) {
-						$.each(users, function(i, user) {
+						for (var i = 0; i<users.users.length; i++) {
+							var user = users.users[i];
 							$("#users-table tbody").append("<tr><td>"+user+"</td><td><a>DEL</a>  <a>MOD</a></td></tr>");
-						});
+						};
 					});
 				}
 

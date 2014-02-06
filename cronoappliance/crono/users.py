@@ -8,7 +8,8 @@ from django.utils import simplejson
 from crono.models import Access
 from squid import squid_helper
 
-sq_helper = squid_helper.SquidHelper()
+USERS_DATABASE = '/etc/squid3/passwd'
+sq_helper = squid_helper.SquidHelper(USERS_DATABASE)
 
 def all(request):
     return HttpResponse(sq_helper.get_users_as_json())

@@ -18,6 +18,10 @@ class SquidHelper( object ):
         self.ht.set_password(user, password)
         self.ht.save()
 
+    def delete(self, user):
+        if self.user_exists(user):
+            self.ht.delete(user)
+
 
 if __name__ == '__main__':
     sh = SquidHelper(USERS_DATABASE)
