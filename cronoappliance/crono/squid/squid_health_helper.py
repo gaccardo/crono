@@ -30,6 +30,9 @@ class SquidHealthHelper( object ):
         return status_buffer
 
     def __process_non_numeric(self, key, value):
+        """
+        Special cases
+        """
         if re.search('Hits as % of all requests', value[0]) or \
            re.search('Memory hits as % of hit requests', value[0]) or \
            re.search('Disk hits as % of hit requests', value[0]):
@@ -41,6 +44,8 @@ class SquidHealthHelper( object ):
 
         elif re.search('Mean Object Size', value[0]):
             return float(value[1].strip('KB\n '))
+
+        raise NonConvertibleValue
 
     def process_parameters(self, status):
         proccesed = list()
