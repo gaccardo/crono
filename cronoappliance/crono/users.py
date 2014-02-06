@@ -6,13 +6,13 @@ from django.http import Http404, HttpResponse
 from django.utils import simplejson
 
 from crono.models import Access
-from squid import squid_helper
+from squid import squid_users_helper
 
 USERS_DATABASE = '/etc/squid3/passwd'
-sq_helper = squid_helper.SquidHelper(USERS_DATABASE)
+sq_users_helper = squid_users_helper.SquidUsersHelper(USERS_DATABASE)
 
 def all(request):
-    return HttpResponse(sq_helper.get_users_as_json())
+    return HttpResponse(sq_users_helper.get_users_as_json())
 
 def update(request):
     return HttpResponse('update')
