@@ -29,15 +29,18 @@ class SquidHealthHelper( object ):
 
         return status_buffer
 
-    def __process_non_numeric(self, value):
-        import pdb;pdb.set_trace()
-        try:
-            if re.search('5min', value):
-                return value.split('5min')[0]
-            elif re.search('%', value):
-                return value.split('%')[0]
-        except Exception, e:
-            raise NonConvertibleValue
+    def __process_non_numeric(self, key, value):
+        if re.search('Hits as % of all requests', value[0]) or \
+           re.search('Memory hits as % of hit requests', value[0]) or \
+           re.search('Disk hits as % of hit requests', value[0]):
+
+            min5 = float(value[2].split('%')[0].split(' ')[1])
+            min60 = float(value[3].strip('%\n').split(' ')[1])
+
+            return {'5min': min5, 'min60': min60}
+
+        elif re.search('Mean Object Size', value[0]):
+            return float(value[1].strip('KB\n '))
 
     def process_parameters(self, status):
         proccesed = list()
@@ -46,12 +49,10 @@ class SquidHealthHelper( object ):
             for param in PARAMETERS:
                 if re.search(param, line):
                     key = ' '.join([line2 for line2 in line.split(':')[0].split(' ') if line2 != '' ])
-
                     try:
                         value = float(line.split(':')[1].split('\n')[0].split(' ')[-1])
                     except ValueError, e:
-                        value = self.__process_non_numeric(line.split(':')[1].split('\n')[0].split(' ')[-1])
-
+                        value = self.__process_non_numeric(key, line.split(':'))
                     proccesed.append( {key: value} )
 
         return proccesed
