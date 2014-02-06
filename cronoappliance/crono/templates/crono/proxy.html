@@ -5,21 +5,33 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			var users_tab_full = false;
+			$.getJSON("{% url 'all' %}", function(users) {
+				for (var i = 0; i<users.users.length; i++) {
+					var user = users.users[i];
+					var row = "<tr><td>"+user+"</td><td>";
+                                        row += "<button id='del-user' value='"+user+"'>DELETE</button>";
+                                        row += "<button id='mod-user' value='"+user+"'>MOD</td></tr>";
+					$("#users-table tbody").append(row);
+				};
+			});
+
+			users_tab_full = true;
+
 			$('#myTab a').click(function (e) {
 	  			e.preventDefault()
 	  			$(this).tab('show')
 
-				if (e.currentTarget.hash == '#users' && !users_tab_full) {
-					$.getJSON("{% url 'all' %}", function(users) {
-						for (var i = 0; i<users.users.length; i++) {
-							var user = users.users[i];
-							$("#users-table tbody").append("<tr><td>"+user+"</td><td><a>DEL</a>  <a>MOD</a></td></tr>");
-						};
-					});
-				}
-
-				users_tab_full = true;
 			})
+
+			// Users manipulation
+			$('#del-user').live('click', function(data) {
+				alert("DELETE: "+this.value);
+			});
+
+			$('#mod-user').live('click', function(data) {
+				alert("MODIFY: "+this.value);
+			});
+
 		});
 	</script>
 {% endblock %}
